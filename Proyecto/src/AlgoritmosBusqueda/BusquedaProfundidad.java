@@ -130,7 +130,7 @@ public class BusquedaProfundidad {
                         if (movimientoColumnaIzquierda > 9) {
                             movimientoColumnaIzquierda = columna;
                         }
-
+                            //pila
                         pila.add(new Nodos(moverIzquierda(fila, columna), nodoExpandido, verificarIzquierda, acumulable, "IZQUIERDA", nodoExpandido.getProfundida() + 1, fila, movimientoColumnaIzquierda));
 
                     }
