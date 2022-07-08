@@ -7,13 +7,13 @@ import java.util.ArrayList;
  * @author Wilson Estiven Rueda Bastidas - David Joan Mosquera Perea
  */
 
-public class BusquedaProfundida {
+public class BusquedaProfundidad {
     Matriz matriz = new Matriz();
     int [][] Estado = new int[10][10];
     ArrayList<Nodos> nodosExpandidos = new ArrayList<>();
     long tiempoInicial;
 
-    public BusquedaProfundida(int [][] estado) {
+    public BusquedaProfundidad(int [][] estado) {
         this.Estado = estado;
         this.tiempoInicial = System.currentTimeMillis();
     }
@@ -130,7 +130,7 @@ public class BusquedaProfundida {
                         if (movimientoColumnaIzquierda > 9) {
                             movimientoColumnaIzquierda = columna;
                         }
-
+                            //pila
                         pila.add(new Nodos(moverIzquierda(fila, columna), nodoExpandido, verificarIzquierda, acumulable, "IZQUIERDA", nodoExpandido.getProfundida() + 1, fila, movimientoColumnaIzquierda));
 
                     }

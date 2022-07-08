@@ -2,11 +2,13 @@ package Laberinto;
 
 import AlgoritmosBusqueda.BusquedaAmplitud;
 import AlgoritmosBusqueda.BusquedaCosto;
-import AlgoritmosBusqueda.BusquedaProfundida;
+import AlgoritmosBusqueda.BusquedaProfundidad;
 import Modulos.Matriz;
 import Modulos.Nodos;
 
-import java.util.*;
+
+import java.util.ArrayList;
+
 
 /**
  * @author Wilson Estiven Rueda Bastidas - David Joan Mosquera Perea
@@ -17,7 +19,7 @@ public class Laberinto {
     Matriz matriz;
     BusquedaAmplitud busqAmplitud;
     BusquedaCosto busqCosto;
-    BusquedaProfundida busqProfundida;
+    BusquedaProfundidad busqProfundida;
     ArrayList<Nodos> listaMovimientosAmplitud;
     ArrayList<Nodos> listaMovimientosAmplitud2;
 
@@ -32,7 +34,7 @@ public class Laberinto {
         matriz.CargarLaberinto();
         busqAmplitud = new BusquedaAmplitud(matriz.getMatriz());
         busqCosto = new BusquedaCosto(matriz.getMatriz());
-        busqProfundida = new BusquedaProfundida(matriz.getMatriz());
+        busqProfundida = new BusquedaProfundidad(matriz.getMatriz());
 
         listaMovimientosAmplitud = new ArrayList<>();
         listaMovimientosAmplitud2 = new ArrayList<>();
@@ -61,7 +63,7 @@ public class Laberinto {
 
         }
         //System.out.println("metas encontradas: "+cont);
-        //movimientosAmplitud(encontrado.get(0));
+        movimientosAmplitud(encontrado.get(1));
         movimientosAmplitud(encontrado.get(0));
     }
 
@@ -122,7 +124,7 @@ public class Laberinto {
         //System.out.println("metas encontradas: "+cont);
         //movimientosAmplitud(encontrado.get(0));
         //System.out.println("operador: "+encontrado.get(1).getOperador());
-        movimientosCostoUniforme(encontrado.get(0));
+        //movimientosCostoUniforme(encontrado.get(0));
     }
 
     public void movimientosCostoUniforme(Nodos meta){
@@ -179,8 +181,9 @@ public class Laberinto {
 
         }
         //System.out.println("metas encontradas: "+cont);
-        //movimientosAmplitud(encontrado.get(0));
-        movimientosProfundidad(encontrado.get(1));
+        //Solución del algoritmo por profundida.
+        //movimientosProfundidad(encontrado.get(1));
+        // movimientosProfundidad(encontrado.get(0));
     }
 
     public void movimientosProfundidad(Nodos meta) {
@@ -228,6 +231,7 @@ public class Laberinto {
         /*Laberinto game = new Laberinto();
         int[][] lab = game.matriz.getMatriz();
         int fila = game.matriz.EncontrarAgente(lab)[0];
+
         int columna = game.matriz.EncontrarAgente(lab)[1];*/
         int opcion = 0;
 
@@ -321,6 +325,8 @@ public class Laberinto {
         }while (opcion != 4) ;
 
 
+
+      
 
     }
 
