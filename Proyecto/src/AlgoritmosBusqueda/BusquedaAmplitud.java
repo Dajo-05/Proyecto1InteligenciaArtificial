@@ -35,22 +35,6 @@ public class BusquedaAmplitud {
 
         return this.Estado;
     }
-
-    //Movimiento del operador - mover derecha.
-    public int[][] moverDerecha(int fila, int columna) {
-        int movimientoColumna = columna + 1;
-
-        if (movimientoColumna < 0) {
-            movimientoColumna = 0;
-        } else if (movimientoColumna > 9) {
-            movimientoColumna = 9;
-        }
-        this.Estado[fila][columna] = 7;
-        this.Estado[fila][movimientoColumna] = 2;
-
-        return this.Estado;
-    }
-
     //Movimiento del operador - mover arriba.
     public int[][] moverArriba(int fila, int columna) {
         int movimientoFila = fila - 1;
@@ -67,7 +51,22 @@ public class BusquedaAmplitud {
         return this.Estado;
     }
 
-    //Movimiento del operador - mover izquierda.
+    //Movimiento del operador - mover derecha.
+    public int[][] moverDerecha(int fila, int columna) {
+        int movimientoColumna = columna + 1;
+
+        if (movimientoColumna < 0) {
+            movimientoColumna = 0;
+        } else if (movimientoColumna > 9) {
+            movimientoColumna = 9;
+        }
+        this.Estado[fila][columna] = 7;
+        this.Estado[fila][movimientoColumna] = 2;
+
+        return this.Estado;
+    }
+
+    //Movimiento del operador - mover abajo.
     public int[][] moverAbajo(int fila, int columna) {
         int movimientoFila = fila + 1;
 
@@ -91,7 +90,7 @@ public class BusquedaAmplitud {
         int fila = 0;
         int columna = 0;
         String movimiento = "";
-        char verificarIzquierda, verificarDerecha, verificarArriba, verificarAbajo;
+        char verificarIzquierda, verificarArriba, verificarDerecha, verificarAbajo;
         char meta = '0';
         int acumulable = 1;
         long tiempo = 0;
@@ -139,7 +138,7 @@ public class BusquedaAmplitud {
                             movimientoColumnaIzquierda = columna;
                         }
 
-                        cola.add(new Nodos(moverIzquierda(fila, columna), nodoExpandido, verificarIzquierda, acumulable, "IZQUIERDA", nodoExpandido.getProfundida() + 1, fila, movimientoColumnaIzquierda));
+                        cola.add(new Nodos(moverIzquierda(fila, columna), nodoExpandido, verificarIzquierda, acumulable, "IZQUIERDA", nodoExpandido.getProfundidad() + 1, fila, movimientoColumnaIzquierda));
 
                     }
                 }
@@ -150,7 +149,7 @@ public class BusquedaAmplitud {
                         if (movimientoFilaArriba > 9) {
                             movimientoFilaArriba = fila;
                         }
-                        cola.add(new Nodos(moverArriba(fila, columna), nodoExpandido, verificarArriba, acumulable, "ARRIBA", nodoExpandido.getProfundida() + 1, movimientoFilaArriba, columna));
+                        cola.add(new Nodos(moverArriba(fila, columna), nodoExpandido, verificarArriba, acumulable, "ARRIBA", nodoExpandido.getProfundidad() + 1, movimientoFilaArriba, columna));
                     }
                 }
 
@@ -161,7 +160,7 @@ public class BusquedaAmplitud {
                         if (movimientoColumnaDerecha > 9) {
                             movimientoColumnaDerecha = columna;
                         }
-                        cola.add(new Nodos(moverDerecha(fila, columna), nodoExpandido, verificarDerecha, acumulable, "DERECHA", nodoExpandido.getProfundida() + 1, fila, movimientoColumnaDerecha));
+                        cola.add(new Nodos(moverDerecha(fila, columna), nodoExpandido, verificarDerecha, acumulable, "DERECHA", nodoExpandido.getProfundidad() + 1, fila, movimientoColumnaDerecha));
                     }
                 }
                 if (verificarAbajo == '1' || verificarAbajo == '5') {
@@ -171,7 +170,7 @@ public class BusquedaAmplitud {
                         if (movimientoFilaAbajo > 9) {
                             movimientoFilaAbajo = fila;
                         }
-                        cola.add(new Nodos(moverAbajo(fila, columna), nodoExpandido, verificarAbajo, acumulable, "ABAJO", nodoExpandido.getProfundida() + 1, movimientoFilaAbajo, columna));
+                        cola.add(new Nodos(moverAbajo(fila, columna), nodoExpandido, verificarAbajo, acumulable, "ABAJO", nodoExpandido.getProfundidad() + 1, movimientoFilaAbajo, columna));
                     }
                 }
 
@@ -299,16 +298,12 @@ public class BusquedaAmplitud {
 
         return movimientos;
     }
-
     public long getTiempoInicial() {
 
         return tiempoInicial;
     }
-
     public void setTiempoInicial(long tiempoInicial) {
 
         this.tiempoInicial = tiempoInicial;
     }
-
-
 }

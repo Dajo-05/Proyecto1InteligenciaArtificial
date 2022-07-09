@@ -8,6 +8,7 @@ import Modulos.Nodos;
 
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 /**
@@ -19,12 +20,10 @@ public class Laberinto {
     Matriz matriz;
     BusquedaAmplitud busqAmplitud;
     BusquedaCosto busqCosto;
-    BusquedaProfundidad busqProfundida;
+    BusquedaProfundidad busqProfundidad;
     ArrayList<Nodos> listaMovimientosAmplitud;
-    ArrayList<Nodos> listaMovimientosAmplitud2;
 
     ArrayList<Nodos> listaMovimientosCostoUniforme;
-    ArrayList<Nodos> listaMovimientosCostoUniforme2;
 
     ArrayList<Nodos> listaMovimientosProfundidad;
 
@@ -34,13 +33,11 @@ public class Laberinto {
         matriz.CargarLaberinto();
         busqAmplitud = new BusquedaAmplitud(matriz.getMatriz());
         busqCosto = new BusquedaCosto(matriz.getMatriz());
-        busqProfundida = new BusquedaProfundidad(matriz.getMatriz());
+        busqProfundidad = new BusquedaProfundidad(matriz.getMatriz());
 
         listaMovimientosAmplitud = new ArrayList<>();
-        listaMovimientosAmplitud2 = new ArrayList<>();
 
         listaMovimientosCostoUniforme = new ArrayList<>();
-        listaMovimientosCostoUniforme2 =  new ArrayList<>();
 
         listaMovimientosProfundidad = new ArrayList<>();
     }
@@ -52,6 +49,7 @@ public class Laberinto {
         ArrayList<Nodos> encontrado = new ArrayList<>();
         int conteo = 0;
         busqAmplitud.verificarAmplitud(cola, padre);
+
         System.err.println("" + busqAmplitud.getNodosExpandidos().size());
 
         for (int i = 1; i < busqAmplitud.getNodosExpandidos().size(); i++) {
@@ -62,9 +60,12 @@ public class Laberinto {
             }
 
         }
-        //System.out.println("metas encontradas: "+cont);
+        //Solución del algoritmo amplitud.
+        //Solución para que encuentre el 1 item.
+        //movimientosAmplitud(encontrado.get(0));
+        //Solución para que encuentre el 2 item.
         movimientosAmplitud(encontrado.get(1));
-        movimientosAmplitud(encontrado.get(0));
+
     }
 
     public void movimientosAmplitud(Nodos meta) {
@@ -72,9 +73,7 @@ public class Laberinto {
             listaMovimientosAmplitud.add(meta);
             movimientosAmplitud(meta.getPadre());
         }
-
     }
-
     public void recorridoAmplitud(int matriz1[][], int fila1, int columna1, int conteo, int posicion) {
 
         int fila = 0;
@@ -94,10 +93,10 @@ public class Laberinto {
             matriz.mostrarLaberinto(estadoMovimiento);
             System.out.println();
             conteo++;
+            System.out.println("Pasos del agente en el laberinto: ");
 
             recorridoAmplitud(estadoMovimiento, fila, columna, conteo, posicion);
         }
-
     }
 
     public void eliminarRecorrido(){
@@ -106,10 +105,10 @@ public class Laberinto {
         }
     }
 
-    public void AgenteCostoUniforme(int [][] c){
+    public void AgenteCostoUniforme(int [][] lab){
 
         ArrayList<Nodos> cola = new ArrayList<>();
-        Nodos padre = new Nodos(c, null, '0', null, 0, 0);
+        Nodos padre = new Nodos(lab, null, '0', null, 0, 0);
         ArrayList<Nodos> encontrado = new ArrayList<>();
         int conteo = 0;
         busqCosto.verificacionCostoUniforme(cola, padre);
@@ -121,10 +120,9 @@ public class Laberinto {
                 conteo++;
             }
         }
-        //System.out.println("metas encontradas: "+cont);
-        //movimientosAmplitud(encontrado.get(0));
-        //System.out.println("operador: "+encontrado.get(1).getOperador());
-        //movimientosCostoUniforme(encontrado.get(0));
+        //movimientosAmplitud(encontrado.get(1));
+        movimientosCostoUniforme(encontrado.get(0));
+
     }
 
     public void movimientosCostoUniforme(Nodos meta){
@@ -148,6 +146,7 @@ public class Laberinto {
                 fila = matriz.EncontrarAgente(matriz1)[0];
                 columna = matriz.EncontrarAgente(matriz1)[1];
             }
+            System.out.println("Pasos del agente en el laberinto: ");
             int[][] estadoMovimiento = busqCosto.moverAgente(listaMovimientosCostoUniforme.get(posicion).getOperador(), fila, columna);
             matriz.mostrarLaberinto(estadoMovimiento);
             System.out.println();
@@ -155,6 +154,7 @@ public class Laberinto {
 
             recorridoCostoUniforme(estadoMovimiento, fila, columna, conteo, posicion);
         }
+
     }
 
     public void eliminarRecorridoCosto(){
@@ -164,26 +164,28 @@ public class Laberinto {
     }
 
 
-    public void AgenteProfundidad(int[][] l) {
+    public void AgenteProfundidad(int[][] lab) {
         ArrayList<Nodos> pila = new ArrayList<>();
-        Nodos padre = new Nodos(l, null, '0', null, 0, 0);
+        Nodos padre = new Nodos(lab, null, '0', null, 0, 0);
         ArrayList<Nodos> encontrado = new ArrayList<>();
         int conteo = 0;
-        busqProfundida.verificarProfundida(pila, padre);
+        busqProfundidad.verificarProfundidad(pila, padre);
         //System.err.println("" + bsqP.getNodosExpandidos().size());
 
-        for (int i = 1; i < busqProfundida.getNodosExpandidos().size(); i++) {
-            if (busqProfundida.getNodosExpandidos().get(i).getMeta() == '5') {
+        for (int i = 1; i < busqProfundidad.getNodosExpandidos().size(); i++) {
+            if (busqProfundidad.getNodosExpandidos().get(i).getMeta() == '5') {
 
-                encontrado.add(conteo, busqProfundida.getNodosExpandidos().get(i));
+                encontrado.add(conteo, busqProfundidad.getNodosExpandidos().get(i));
                 conteo++;
             }
 
         }
-        //System.out.println("metas encontradas: "+cont);
-        //Solución del algoritmo por profundida.
-        //movimientosProfundidad(encontrado.get(1));
-        // movimientosProfundidad(encontrado.get(0));
+
+        //Solución del algoritmo por profundidad.
+        //Solución para que encuentre el 1 item.
+        //movimientosProfundidad(encontrado.get(0));
+        //Solución para que encuentre el 2 item.
+        movimientosProfundidad(encontrado.get(1));
     }
 
     public void movimientosProfundidad(Nodos meta) {
@@ -210,14 +212,14 @@ public class Laberinto {
                 columna = matriz.EncontrarAgente(matriz1)[1];
             }
 
-            int[][] estadoMovimiento = busqProfundida.moverAgente(listaMovimientosProfundidad.get(posicion).getOperador(), fila, columna);
+            int[][] estadoMovimiento = busqProfundidad.moverAgente(listaMovimientosProfundidad.get(posicion).getOperador(), fila, columna);
             matriz.mostrarLaberinto(estadoMovimiento);
             System.out.println();
             conteo++;
+            System.out.println("Pasos del agente en el laberinto: ");
 
             recorridoProfundidad(estadoMovimiento, fila, columna, conteo, posicion);
         }
-
     }
 
     public void eliminarRecorridoProfundidad(){
@@ -228,11 +230,6 @@ public class Laberinto {
 
     public static void main(String[] args) {
 
-        /*Laberinto game = new Laberinto();
-        int[][] lab = game.matriz.getMatriz();
-        int fila = game.matriz.EncontrarAgente(lab)[0];
-
-        int columna = game.matriz.EncontrarAgente(lab)[1];*/
         int opcion = 0;
 
         do {
@@ -250,11 +247,11 @@ public class Laberinto {
 
              switch (opcion){
                  case 1:
+                     // El algoritmo de busqueda que utiliza es por profundidad.
                      Laberinto game = new Laberinto();
                      int[][] lab = game.matriz.getMatriz();
                      int fila = game.matriz.EncontrarAgente(lab)[0];
                      int columna = game.matriz.EncontrarAgente(lab)[1];
-                     // Secuencia para resolver por algoritmo de profundida
 
                      game.AgenteProfundidad(lab);
                      game.matriz.mostrarLaberinto(lab);
@@ -263,44 +260,45 @@ public class Laberinto {
                      int [][] lab2 = game.matriz.getMatriz();
                      game.recorridoProfundidad(lab2, fila, columna, 0, game.listaMovimientosProfundidad.size());
                      long tiempoFinal = System.currentTimeMillis();
-                     tiempoFinal = (tiempoFinal - game.busqProfundida.getTiempoInicial());
-                     System.err.println("Los Nodos expandidos son: "+ game.busqProfundida.getNodosExpandidos().size() +
-                             " La Profundidad es : "+game.listaMovimientosProfundidad.get(0).getProfundida() +
+                     tiempoFinal = (tiempoFinal - game.busqProfundidad.getTiempoInicial());
+                     System.err.println("Los Nodos expandidos son: "+ game.busqProfundidad.getNodosExpandidos().size() +
+                             " La Profundidad es : "+game.listaMovimientosProfundidad.get(0).getProfundidad() +
                              " El Tiempo es : "+tiempoFinal+" Milisegundos");
                      game.eliminarRecorridoProfundidad();
 
                      break;
                  case 2:
+                     // El algoritmo de busqueda que utiliza es por amplitud.
                      Laberinto game2 = new Laberinto();
-                     int[][] laba = game2.matriz.getMatriz();
-                     int fila2 = game2.matriz.EncontrarAgente(laba)[0];
-                     int columna2 = game2.matriz.EncontrarAgente(laba)[1];
-                     // Secuencia para resolver la busqueda por amplitud
+                     int[][] laba2 = game2.matriz.getMatriz();
+                     int fila2 = game2.matriz.EncontrarAgente(laba2)[0];
+                     int columna2 = game2.matriz.EncontrarAgente(laba2)[1];
 
-                     game2.agenteAmplitud(laba);
-                     game2.matriz.mostrarLaberinto(laba);
+
+                     game2.agenteAmplitud(laba2);
+                     game2.matriz.mostrarLaberinto(laba2);
                      System.out.println();
                      game2.matriz.CargarLaberinto();
-                     int [][] l2 = game2.matriz.getMatriz();
-                     game2.recorridoAmplitud(l2, fila2, columna2, 0, game2.listaMovimientosAmplitud.size());
+                     int [][] lab3 = game2.matriz.getMatriz();
+                     game2.recorridoAmplitud(lab3, fila2, columna2, 0, game2.listaMovimientosAmplitud.size());
                      long tiempoFinalAmplitud = System.currentTimeMillis();
                      tiempoFinalAmplitud = (tiempoFinalAmplitud - game2.busqAmplitud.getTiempoInicial());
                      System.err.println("Los Nodos expandidos son : "+ game2.busqAmplitud.getNodosExpandidos().size() +
-                             " El Nivel de Profundidad es : "+game2.listaMovimientosAmplitud.get(0).getProfundida() +
+                             " El Nivel de Profundidad es : "+game2.listaMovimientosAmplitud.get(0).getProfundidad() +
                              " El Tiempo es : "+tiempoFinalAmplitud+" Milisegundos");
                      game2.eliminarRecorrido();
 
                      break;
                  case 3:
+                     // El algoritmo de busqueda que utiliza es por costo uniforme.
                      Laberinto game3 = new Laberinto();
-                     int[][] lab3 = game3.matriz.getMatriz();
-                     int fila3 = game3.matriz.EncontrarAgente(lab3)[0];
-                     int columna3 = game3.matriz.EncontrarAgente(lab3)[1];
+                     int[][] laba3 = game3.matriz.getMatriz();
+                     int fila3 = game3.matriz.EncontrarAgente(laba3)[0];
+                     int columna3 = game3.matriz.EncontrarAgente(laba3)[1];
 
-                     // Secuencia para resolver la busqueda costo uniforme
 
-                     game3.AgenteCostoUniforme(lab3);
-                     game3.matriz.mostrarLaberinto(lab3);
+                     game3.AgenteCostoUniforme(laba3);
+                     game3.matriz.mostrarLaberinto(laba3);
                      System.out.println();
                      game3.matriz.CargarLaberinto();
                      int [][] lab4 = game3.matriz.getMatriz();
@@ -308,7 +306,7 @@ public class Laberinto {
                      long tiempoFinalCosto = System.currentTimeMillis();
                      tiempoFinalCosto = (tiempoFinalCosto - game3.busqAmplitud.getTiempoInicial());
                      System.err.println("Los Nodos expandidos son: "+ game3.busqCosto.getNodosExpandidos().size() +
-                             " Nivel de Profundidad: "+game3.listaMovimientosCostoUniforme.get(0).getProfundida()+
+                             " Nivel de Profundidad: "+game3.listaMovimientosCostoUniforme.get(0).getProfundidad()+
                              " El Costo: "+game3.listaMovimientosCostoUniforme.get(0).getCosto() +
                              " El Tiempo: "+tiempoFinalCosto+" Milisegundos");
 
@@ -316,17 +314,12 @@ public class Laberinto {
 
                      break;
                  default:
-                     System.out.println("Digite una opcion del menu");
+                     System.out.println("Digite una opción del menú");
                      break;
 
              }
 
-
         }while (opcion != 4) ;
-
-
-
-      
 
     }
 
