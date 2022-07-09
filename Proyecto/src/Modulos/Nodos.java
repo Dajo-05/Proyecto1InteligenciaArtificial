@@ -9,7 +9,7 @@ public class Nodos {
     Nodos padre;
     // Dirección movimiento del agente.
     String operador;
-    int profundida;
+    int profundidad;
     int costo;
     char meta;
     int posicionFila;
@@ -17,31 +17,31 @@ public class Nodos {
     int metasEncontradas;
 
 
-    public Nodos(int[][] estado, Nodos padre, char meta , String operador, int profundida, int costo) {
+    public Nodos(int[][] estado, Nodos padre, char meta , String operador, int profundidad, int costo) {
         this.Estado = estado;
         this.padre = padre;
         this.operador = operador;
-        this.profundida = profundida;
+        this.profundidad = profundidad;
         this.meta = meta;
         this.costo = costo;
     }
 
-    public Nodos(int[][] estado, Nodos padre, char meta , int metaEncontrada ,String operador, int profundida, int posicionFila, int posicionColumna){
+    public Nodos(int[][] estado, Nodos padre, char meta , int metaEncontrada ,String operador, int profundidad, int posicionFila, int posicionColumna){
         this.Estado = estado;
         this.padre = padre;
         this.operador = operador;
-        this.profundida = profundida;
+        this.profundidad = profundidad;
         this.posicionFila = posicionFila;
         this.posicionColumna = posicionColumna;
         this.meta = meta;
         this.metasEncontradas = metaEncontrada;
     }
 
-    public Nodos(int[][] estado, Nodos padre, char meta , String operador, int profundida, int posicionFila, int posicionColumna, int costo){
+    public Nodos(int[][] estado, Nodos padre, char meta , String operador, int profundidad, int posicionFila, int posicionColumna, int costo){
         this.Estado = estado;
         this.padre = padre;
         this.operador = operador;
-        this.profundida = profundida;
+        this.profundidad = profundidad;
         this.posicionFila= posicionFila;
         this.posicionColumna= posicionColumna;
         this.meta = meta;
@@ -72,11 +72,11 @@ public class Nodos {
     }
 
     // Los get y set profundida.
-    public int getProfundida() {
-        return profundida;
+    public int getProfundidad() {
+        return profundidad;
     }
-    public void setProfundida(int profundida) {
-        this.profundida = profundida;
+    public void setProfundidad(int profundidad) {
+        this.profundidad = profundidad;
     }
 
     // Los get y set costo.
