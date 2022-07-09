@@ -7,13 +7,13 @@ import java.util.ArrayList;
  * @author Wilson Estiven Rueda Bastidas - David Joan Mosquera Perea
  */
 
-public class BusquedaProfundida {
+public class BusquedaProfundidad {
     Matriz matriz = new Matriz();
     int [][] Estado = new int[10][10];
     ArrayList<Nodos> nodosExpandidos = new ArrayList<>();
     long tiempoInicial;
 
-    public BusquedaProfundida(int [][] estado) {
+    public BusquedaProfundidad(int [][] estado) {
         this.Estado = estado;
         this.tiempoInicial = System.currentTimeMillis();
     }
@@ -77,7 +77,7 @@ public class BusquedaProfundida {
         return this.Estado;
     }
 
-    public void verificarProfundida(ArrayList<Nodos> pila, Nodos padre){
+    public void verificarProfundidad(ArrayList<Nodos> pila, Nodos padre){
 
         int conteo = 0;
         int conteoMeta = 0;
@@ -85,7 +85,7 @@ public class BusquedaProfundida {
         int fila = 0;
         int columna = 0;
         String movimiento = "";
-        char verificarIzquierda, verificarDerecha, verificarArriba, verificarAbajo;
+        char verificarIzquierda, verificarArriba, verificarDerecha,  verificarAbajo;
         char meta = '0';
         int acumulable = 1;
         long tiempo = 0;
@@ -112,13 +112,11 @@ public class BusquedaProfundida {
 
                 }
 
-
-
                 movimiento = verificar(fila, columna);
 
                 verificarIzquierda = movimiento.charAt(0);
-                verificarDerecha = movimiento.charAt(1);
-                verificarArriba = movimiento.charAt(2);
+                verificarArriba = movimiento.charAt(1);
+                verificarDerecha = movimiento.charAt(2);
                 verificarAbajo = movimiento.charAt(3);
 
                 if (verificarIzquierda == '1' || verificarIzquierda == '5') {
@@ -130,20 +128,9 @@ public class BusquedaProfundida {
                         if (movimientoColumnaIzquierda > 9) {
                             movimientoColumnaIzquierda = columna;
                         }
+                            //pila
+                        pila.add(new Nodos(moverIzquierda(fila, columna), nodoExpandido, verificarIzquierda, acumulable, "IZQUIERDA", nodoExpandido.getProfundidad() + 1, fila, movimientoColumnaIzquierda));
 
-                        pila.add(new Nodos(moverIzquierda(fila, columna), nodoExpandido, verificarIzquierda, acumulable, "IZQUIERDA", nodoExpandido.getProfundida() + 1, fila, movimientoColumnaIzquierda));
-
-                    }
-                }
-
-                if (verificarDerecha == '1' || verificarDerecha == '5') {
-                    int movimientoColumnaDerecha = columna + 1;
-
-                    if (movimientoColumnaDerecha >= 0) {
-                        if (movimientoColumnaDerecha > 9) {
-                            movimientoColumnaDerecha = columna;
-                        }
-                        pila.add(new Nodos(moverDerecha(fila, columna), nodoExpandido, verificarDerecha, acumulable, "DERECHA", nodoExpandido.getProfundida() + 1, fila, movimientoColumnaDerecha));
                     }
                 }
 
@@ -154,7 +141,18 @@ public class BusquedaProfundida {
                         if (movimientoFilaArriba > 9) {
                             movimientoFilaArriba = fila;
                         }
-                        pila.add(new Nodos(moverArriba(fila, columna), nodoExpandido, verificarArriba, acumulable, "ARRIBA", nodoExpandido.getProfundida() + 1, movimientoFilaArriba, columna));
+                        pila.add(new Nodos(moverArriba(fila, columna), nodoExpandido, verificarArriba, acumulable, "ARRIBA", nodoExpandido.getProfundidad() + 1, movimientoFilaArriba, columna));
+                    }
+                }
+
+                if (verificarDerecha == '1' || verificarDerecha == '5') {
+                    int movimientoColumnaDerecha = columna + 1;
+
+                    if (movimientoColumnaDerecha >= 0) {
+                        if (movimientoColumnaDerecha > 9) {
+                            movimientoColumnaDerecha = columna;
+                        }
+                        pila.add(new Nodos(moverDerecha(fila, columna), nodoExpandido, verificarDerecha, acumulable, "DERECHA", nodoExpandido.getProfundidad() + 1, fila, movimientoColumnaDerecha));
                     }
                 }
 
@@ -165,7 +163,7 @@ public class BusquedaProfundida {
                         if (movimientoFilaAbajo > 9) {
                             movimientoFilaAbajo = fila;
                         }
-                        pila.add(new Nodos(moverAbajo(fila, columna), nodoExpandido, verificarAbajo, acumulable, "ABAJO", nodoExpandido.getProfundida() + 1, movimientoFilaAbajo, columna));
+                        pila.add(new Nodos(moverAbajo(fila, columna), nodoExpandido, verificarAbajo, acumulable, "ABAJO", nodoExpandido.getProfundidad() + 1, movimientoFilaAbajo, columna));
                     }
                 }
 
@@ -175,17 +173,16 @@ public class BusquedaProfundida {
         }
 
     }
-
     public int[][] moverAgente(String movimiento, int fila, int columna) {
 
         if (movimiento.equalsIgnoreCase("IZQUIERDA")) {
             return this.moverIzquierda(fila, columna);
         }
-        if (movimiento.equalsIgnoreCase("DERECHA")) {
-            return this.moverDerecha(fila, columna);
-        }
         if (movimiento.equalsIgnoreCase("ARRIBA")) {
             return this.moverArriba(fila, columna);
+        }
+        if (movimiento.equalsIgnoreCase("DERECHA")) {
+            return this.moverDerecha(fila, columna);
         }
         if (movimiento.equalsIgnoreCase("ABAJO")) {
             return this.moverAbajo(fila, columna);
@@ -219,6 +216,26 @@ public class BusquedaProfundida {
             movimientos += "0";
         }
 
+        int movimientoFilaArriba = fila - 1;
+
+        if (movimientoFilaArriba >= 0) {
+            if (movimientoFilaArriba > 9) {
+                movimientoFilaArriba = fila;
+            }
+            int arriba = this.Estado[movimientoFilaArriba][columna];
+            if (arriba == 5) {
+                movimientos += "5";
+            } else {
+                if (arriba != 1 && arriba != 7 && arriba != 5 && arriba != 2) {
+                    movimientos += "1";
+                } else {
+                    movimientos += "0";
+                }
+            }
+        } else {
+            movimientos += "0";
+        }
+
         int movimientoColumnaDerecha = columna + 1;
 
         if (movimientoColumnaDerecha >= 0) {
@@ -231,26 +248,6 @@ public class BusquedaProfundida {
                 movimientos += "5";
             } else {
                 if (derecha != 1 && derecha != 7 && derecha != 5 && derecha != 2) {
-                    movimientos += "1";
-                } else {
-                    movimientos += "0";
-                }
-            }
-        } else {
-            movimientos += "0";
-        }
-
-        int movimientoFilaArriba = fila - 1;
-
-        if (movimientoFilaArriba >= 0) {
-            if (movimientoFilaArriba > 9) {
-                movimientoFilaArriba = fila;
-            }
-            int arriba = this.Estado[movimientoFilaArriba][columna];
-            if (arriba == 5) {
-                movimientos += "5";
-            } else {
-                if (arriba != 1 && arriba != 7 && arriba != 5 && arriba != 2) {
                     movimientos += "1";
                 } else {
                     movimientos += "0";

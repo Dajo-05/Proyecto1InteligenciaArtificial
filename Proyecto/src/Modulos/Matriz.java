@@ -22,25 +22,19 @@ public class Matriz {
             //Primera linea nos indica cual es la longitud de la matriz
             String linea = br.readLine();
 
-            int fila = 0; //Para recorrer las filas de la matriz
+           //Para recorrer las filas de la matriz
+            int fila = 0;
             while (linea != null) {
-                /*
-                 * Tenemos todos los enteros JUNTOS en el String linea.
-                 * Con split() los SEPARAMOS en un array donde cada entero
-                 * es un String individual. Con un bucle, los parseamos a Integer
-                 * para guardarlos en la matriz
-                 */
+
                 String[] enteros = linea.split(" ");
                 for (int i = 0; i < enteros.length; i++) {
                     matriz[fila][i] = Integer.parseInt(enteros[i]);
                 }
 
-                fila++; //Incrementamos fila para la próxima línea de enteros
-                linea = br.readLine(); //Leemos siguiente línea
+                fila++;
+                linea = br.readLine();
             }
-            br.close(); //Cerramos el lector de ficheros
-
-            //Mostramos la matriz leída
+            br.close();
         } catch (FileNotFoundException e) {
             System.out.println("Error! No se encontró el archivo");
             e.printStackTrace();
@@ -58,12 +52,12 @@ public class Matriz {
         return this.matriz;
     }
 
-    public int[] EncontrarAgente(int[][] a) {
+    public int[] EncontrarAgente(int[][] lab) {
         int[] agente = new int[2];
         int fila = 0;
         while (fila < 10) {
             for (int i = 0; i < 10; i++) {
-                if (a[fila][i] == 2) {
+                if (lab[fila][i] == 2) {
                     agente[0] = fila;
                     agente[1] = i;
                 }
@@ -73,12 +67,12 @@ public class Matriz {
         return agente;
     }
 
-    public int[] EncontrarMovimientoAgente(int[][] a, int movimiento) {
+    public int[] EncontrarMovimientoAgente(int[][] lab, int movimiento) {
         int[] agente = new int[2];
         int fila = 0;
         while (fila < 10) {
             for (int i = 0; i < 10; i++) {
-                if (a[fila][i] == movimiento) {
+                if (lab[fila][i] == movimiento) {
                     agente[0] = fila;
                     agente[1] = i;
                 }

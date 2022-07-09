@@ -79,14 +79,19 @@ public class BusquedaCosto {
 
     public void verificacionCostoUniforme(ArrayList<Nodos> cola, Nodos padre) {
 
-        int conteo = 0;
         int conteoMeta = 0;
         cola.add(padre);
         int fila = 0;
         int columna = 0;
         int[] movimiento = new int[4];
-        int verificarIzquierda = 0, verificarArriba = 0, verificarDerecha = 0, verificarAbajo = 0;
-        char verificarIzquierdaMeta = '0', verificarArribaMeta = '0', verificarDerechaMeta = '0', verificarAbajoMeta = '0';
+        int verificarIzquierda = 0;
+        int verificarArriba = 0;
+        int verificarDerecha = 0;
+        int verificarAbajo = 0;
+        char verificarIzquierdaMeta = '0';
+        char verificarArribaMeta = '0';
+        char verificarDerechaMeta = '0';
+        char verificarAbajoMeta = '0';
         char meta = '0';
         boolean costoAceite = false;
 
@@ -110,23 +115,17 @@ public class BusquedaCosto {
                 if (meta == '5') {
                     conteoMeta++;
                 }
-
                 movimiento = verficarCostoCaminos(fila, columna);
-                //System.err.println("movimientos: " + mov.length);
+
                 verificarIzquierda = movimiento[0];
                 verificarArriba = movimiento[1];
                 verificarDerecha = movimiento[2];
                 verificarAbajo = movimiento[3];
 
-                /*System.err.println("IZ: " + verIzquierda);
-            System.err.println("ARR: " + verArriba);
-            System.err.println("DER: " + verDerecha);
-            System.err.println("ABA: " + verAbajo);*/
-                if (verificarIzquierda != 1000) {
+                if (verificarIzquierda != 100) {
 
                     if (verificarIzquierda == 0) {
                         verificarIzquierdaMeta = '5';
-                        //System.out.println("Meta IZ: " + verIzquierdaMeta);
                     }
 
                     if (verificarIzquierda == 4) {
@@ -141,17 +140,16 @@ public class BusquedaCosto {
                             movimientoColumnaIzquierda = columna;
                         }
 
-                        cola.add(new Nodos(moverIzquierda(fila, columna), nodoExpandido, verificarIzquierdaMeta, "IZQUIERDA", nodoExpandido.getProfundida() + 1, fila, movimientoColumnaIzquierda, nodoExpandido.getCosto() + verificarIzquierda));
+                        cola.add(new Nodos(moverIzquierda(fila, columna), nodoExpandido, verificarIzquierdaMeta, "IZQUIERDA", nodoExpandido.getProfundidad() + 1, fila, movimientoColumnaIzquierda, nodoExpandido.getCosto() + verificarIzquierda));
                         verificarIzquierda = '0';
                         costoAceite = false;
                     }
                 }
 
-                if (verificarArriba != 1000) {
+                if (verificarArriba != 100) {
 
                     if (verificarArriba == 0) {
                         verificarArribaMeta = '5';
-                        //System.out.println("Meta ARR: " + verArribaMeta);
                     }
 
                     if (verificarArriba == 4) {
@@ -164,40 +162,37 @@ public class BusquedaCosto {
                         if (movimientoFilaArriba > 9) {
                             movimientoFilaArriba = fila;
                         }
-                        cola.add(new Nodos(moverArriba(fila, columna), nodoExpandido, verificarArribaMeta, "ARRIBA", nodoExpandido.getProfundida() + 1, movimientoFilaArriba, columna, nodoExpandido.getCosto() + verificarArriba));
+                        cola.add(new Nodos(moverArriba(fila, columna), nodoExpandido, verificarArribaMeta, "ARRIBA", nodoExpandido.getProfundidad() + 1, movimientoFilaArriba, columna, nodoExpandido.getCosto() + verificarArriba));
                         verificarArribaMeta = '0';
                         costoAceite = false;
                     }
                 }
 
-                if (verificarDerecha != 1000) {
+                if (verificarDerecha != 100) {
 
                     if (verificarDerecha == 0) {
                         verificarDerechaMeta = '5';
-                        //System.out.println("Meta DER: " + verDerechaMeta);
                     }
 
                     if (verificarDerecha == 4) {
                         costoAceite = true;
                     }
-
                     int movimientoColumnaDerecha = columna + 1;
 
                     if (movimientoColumnaDerecha >= 0) {
                         if (movimientoColumnaDerecha > 9) {
                             movimientoColumnaDerecha = columna;
                         }
-                        cola.add(new Nodos(moverDerecha(fila, columna), nodoExpandido, verificarDerechaMeta, "DERECHA", nodoExpandido.getProfundida() + 1, fila, movimientoColumnaDerecha, nodoExpandido.getCosto() + verificarDerecha));
+                        cola.add(new Nodos(moverDerecha(fila, columna), nodoExpandido, verificarDerechaMeta, "DERECHA", nodoExpandido.getProfundidad() + 1, fila, movimientoColumnaDerecha, nodoExpandido.getCosto() + verificarDerecha));
                         verificarDerechaMeta = '0';
                         costoAceite = false;
                     }
                 }
 
-                if (verificarAbajo != 1000) {
+                if (verificarAbajo != 100) {
 
                     if (verificarAbajo == 0) {
                         verificarAbajoMeta = '5';
-                        //System.out.println("Meta ABA: " + verAbajoMeta);
                     }
 
                     if (verificarAbajo == 4) {
@@ -210,19 +205,17 @@ public class BusquedaCosto {
                         if (movimientoFilaAbajo > 9) {
                             movimientoFilaAbajo = fila;
                         }
-                        cola.add(new Nodos(moverAbajo(fila, columna), nodoExpandido, verificarAbajoMeta, "ABAJO", nodoExpandido.getProfundida() + 1, movimientoFilaAbajo, columna, nodoExpandido.getCosto() + verificarAbajo));
+                        cola.add(new Nodos(moverAbajo(fila, columna), nodoExpandido, verificarAbajoMeta, "ABAJO", nodoExpandido.getProfundidad() + 1, movimientoFilaAbajo, columna, nodoExpandido.getCosto() + verificarAbajo));
                         verificarAbajoMeta = '0';
                         costoAceite = false;
                     }
                 }
-
                 Collections.sort(cola, new Comparator<Nodos>() {
                     @Override
                     public int compare(Nodos o1, Nodos o2) {
                         return new Integer(o1.getCosto()).compareTo(new Integer(o2.getCosto()));
                     }
                 });
-                //cont++;
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Mensaje: " + e.getMessage());
@@ -231,10 +224,12 @@ public class BusquedaCosto {
 
     public int[] verficarCostoCaminos(int fila, int columna) {
 
-        //String mover = "";
         int[] mover = new int[4];
 
-        int izq = 0, arri = 0, dere = 0, abaj = 0;
+        int izq = 0;
+        int arri = 0;
+        int dere = 0;
+        int abaj = 0;
 
         int movimientoColumnaIzquierda = columna - 1;
 
@@ -253,14 +248,12 @@ public class BusquedaCosto {
                     } else {
                         izq = 1;
                     }
-
                 } else {
-                    izq = 1000;
+                    izq = 100;
                 }
             }
-
         } else {
-            izq = 1000;
+            izq = 100;
         }
 
         int movimientoFilaArriba = fila - 1;
@@ -282,12 +275,12 @@ public class BusquedaCosto {
                     }
 
                 } else {
-                    arri = 1000;
+                    arri = 100;
                 }
             }
 
         } else {
-            arri = 1000;
+            arri = 100;
         }
 
         int movimientoColumnaDerecha = columna + 1;
@@ -311,12 +304,12 @@ public class BusquedaCosto {
                     }
 
                 } else {
-                    dere = 1000;
+                    dere = 100;
                 }
             }
 
         } else {
-            dere = 1000;
+            dere = 100;
         }
 
         int movimientoFilaAbajo = fila + 1;
@@ -337,11 +330,11 @@ public class BusquedaCosto {
                         abaj = 1;
                     }
                 } else {
-                    abaj = 1000;
+                    abaj = 100;
                 }
             }
         } else {
-            abaj = 1000;
+            abaj = 100;
         }
 
         mover[0] = izq;
@@ -377,20 +370,5 @@ public class BusquedaCosto {
         this.nodosExpandidos = nodosExpandidos;
     }
 
-    //ordenamiento wuiki wuiki
-    public ArrayList<Nodos> ordenarMenorAMayor(ArrayList<Nodos> listaDeNodos) {
-
-        Collections.sort(listaDeNodos, new Comparator<Nodos>() {
-            @Override
-            public int compare(Nodos o1, Nodos o2) {
-                return new Integer(o1.getCosto()).compareTo(new Integer(o2.getCosto()));
-            }
-        });
-        for (int i = 0; i < listaDeNodos.size(); i++) {
-            System.out.println("DATA: " + listaDeNodos.get(i).getCosto());
-        }
-
-        return listaDeNodos;
-    }
 
 }
